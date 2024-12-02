@@ -1,14 +1,19 @@
-
 .home-container {
   background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
   height: 100vh;
   background-size: cover;
   padding-top: 50px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media screen and (min-width: 768px) {
   .home-container {
     background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+    height: 100vh;
+    background-size: cover;
   }
 }
 .home {
@@ -29,4 +34,6 @@
   width: 150px;
   font-family: 'Roboto';
   padding: 10px;
+  border-radius: 10px;
+  color: #fff;
 }

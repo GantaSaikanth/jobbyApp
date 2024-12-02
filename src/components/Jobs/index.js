@@ -46,6 +46,14 @@ const salaryRangesList = [
   },
 ]
 
+const locationTypeCheckedList = [
+  {location: 'Hyderabad', locationTypeId: 'HYDERABAD'},
+  {location: 'Bangalore', locationTypeId: 'BANGALORE'},
+  {location: 'Chennai', locationTypeId: 'CHENNAI'},
+  {location: 'Mumbai', locationTypeId: 'MUMBAI'},
+  {location: 'Delhi', locationTypeId: 'DELHI'},
+]
+
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
@@ -69,6 +77,7 @@ class Jobs extends Component {
     activeSalaryRangeId: '',
     jobsList: [],
     employmentTypesChecked: [],
+    locationTypeChecked: [],
   }
 
   componentDidMount() {
@@ -90,16 +99,34 @@ class Jobs extends Component {
     this.setState({employmentTypesChecked: updatedList}, this.getJobs)
   }
 
+  updateLocationTypeChecked = locationTypeId => {
+    const {locationTypeChecked} = this.state
+    let updatedLists = locationTypeChecked
+    if (locationTypeChecked.includes(locationTypeId)) {
+      updatedLists = locationTypeChecked.filter(each => each !== locationTypeId)
+    } else {
+      updatedLists = [...updatedLists, locationTypeId]
+    }
+
+    this.setState({locationTypeChecked: updatedLists}, this.getJobs)
+  }
+
   updateSalaryRangeId = activeSalaryRangeId =>
     this.setState({activeSalaryRangeId}, this.getJobs)
 
   getJobs = async () => {
     this.setState({apiForJobs: apiStatusConstantsForJobs.inProgress})
 
-    const {searchInput, employmentTypesChecked, activeSalaryRangeId} =
-      this.state
+    const {
+      searchInput,
+      employmentTypesChecked,
+      activeSalaryRangeId,
+      locationTypeChecked,
+    } = this.state
+    console.log(employmentTypesChecked)
+    console.log(locationTypeChecked)
     const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentTypesChecked}&minimum_package=${activeSalaryRangeId}&search=${searchInput}`
+    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentTypesChecked}&minimum_package=${activeSalaryRangeId}&search=${searchInput}&location=${locationTypeChecked}`
 
     const options = {
       headers: {
@@ -345,6 +372,32 @@ class Jobs extends Component {
                   )
                 })}
               </ul>
+
+              <div className="tabs-lists">
+                <h1>Location</h1>
+                <ul className="tab">
+                  {locationTypeCheckedList.map(eachType => {
+                    const updatedLocationTypeList = () =>
+                      this.updateLocationTypeChecked(eachType.locationTypeId)
+
+                    return (
+                      <li className="emp-para" key={eachType.locationTypeId}>
+                        <input
+                          type="radio"
+                          id={eachType.locationTypeId}
+                          onChange={updatedLocationTypeList}
+                        />
+                        <label
+                          className="lebel"
+                          htmlFor={eachType.locationTypeId}
+                        >
+                          {eachType.location}
+                        </label>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
           <div className="other-tabs">
@@ -356,6 +409,7 @@ class Jobs extends Component {
                 onChange={this.onChangeSearch}
               />
               <button
+                className="button-search"
                 aria-label="search-button"
                 data-testid="searchButton"
                 type="button"

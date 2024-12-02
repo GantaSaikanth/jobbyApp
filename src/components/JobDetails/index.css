@@ -14,6 +14,13 @@
   padding: 10px;
   /* border: 1px solid white; */
 }
+.loader-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (min-width: 768px) {
   .job-details-content-container {
     padding-top: 35px;

@@ -1,10 +1,12 @@
-.nav-bar {
+.navbar {
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: #2c364c;
-  height: 20vh;
+  height: 13vh;
   justify-content: space-between;
+  position: sticky;
+  top: 0px;
 }
 .image-container {
   display: flex;
