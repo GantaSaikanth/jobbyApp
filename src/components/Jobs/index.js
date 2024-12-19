@@ -77,7 +77,7 @@ class Jobs extends Component {
     activeSalaryRangeId: '',
     jobsList: [],
     employmentTypesChecked: [],
-    locationTypeChecked: [],
+    locationTypeChecked: '',
   }
 
   componentDidMount() {
@@ -100,15 +100,7 @@ class Jobs extends Component {
   }
 
   updateLocationTypeChecked = locationTypeId => {
-    const {locationTypeChecked} = this.state
-    let updatedLists = locationTypeChecked
-    if (locationTypeChecked.includes(locationTypeId)) {
-      updatedLists = locationTypeChecked.filter(each => each !== locationTypeId)
-    } else {
-      updatedLists = [...updatedLists, locationTypeId]
-    }
-
-    this.setState({locationTypeChecked: updatedLists}, this.getJobs)
+    this.setState({locationTypeChecked: locationTypeId}, this.getJobs)
   }
 
   updateSalaryRangeId = activeSalaryRangeId =>
@@ -386,6 +378,7 @@ class Jobs extends Component {
                           type="radio"
                           id={eachType.locationTypeId}
                           onChange={updatedLocationTypeList}
+                          name="locations"
                         />
                         <label
                           className="lebel"
